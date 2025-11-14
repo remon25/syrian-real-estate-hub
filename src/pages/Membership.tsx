@@ -1,9 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { CheckCircle, Award, BookOpen, Scale, TrendingUp, Users, FileText } from "lucide-react";
+import {
+  CheckCircle,
+  Award,
+  BookOpen,
+  Scale,
+  TrendingUp,
+  Users,
+  FileText,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
@@ -20,13 +34,14 @@ const benefits = [
   },
   {
     icon: Scale,
-    title: "استشارات قانونية متخصصة",
+    title: "استشارات قانونية من مستشارين متخصصين",
     description: "تدقيق عقود، تنظيم قضايا، نصائح مهنية",
   },
   {
     icon: Users,
     title: "الوجود في دليل المكاتب المعتمدة",
-    description: "يُعرض مكتبك مع رابط مباشر لصفحتك",
+    description:
+      "يُعرض مكتبك في موقع الجمعية مع رابط مباشر لصفحتك في سويس هوم.",
   },
   {
     icon: TrendingUp,
@@ -65,20 +80,25 @@ const Membership = () => {
       <section className="bg-gradient-to-br from-primary via-primary/90 to-accent text-primary-foreground py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">العضوية والانتساب</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              العضوية والانتساب
+            </h1>
             <p className="text-xl md:text-2xl text-primary-foreground/90">
-              انضم إلى شبكة الوكلاء العقاريين المعتمدين واستفد من مجموعة من الخدمات الحصرية
+              انضم إلى شبكة الوكلاء العقاريين المعتمدين واستفد من مجموعة من
+              الخدمات الحصرية
             </p>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20">
+      <section className="pt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">لماذا تنضم إلى الجمعية؟</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                لماذا تنضم إلى الجمعية؟
+              </h2>
               <p className="text-lg text-muted-foreground">
                 عضويتك تمنح مكتبك مجموعة من الفوائد الحصرية
               </p>
@@ -86,7 +106,10 @@ const Membership = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {benefits.map((benefit, index) => (
-                <Card key={index} className="border-2 hover:border-primary transition-all">
+                <Card
+                  key={index}
+                  className="border-2 hover:border-primary transition-all"
+                >
                   <CardHeader>
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
                       <benefit.icon className="h-6 w-6 text-primary" />
@@ -104,7 +127,7 @@ const Membership = () => {
       </section>
 
       {/* Membership Form */}
-      <section className="py-20 bg-muted/30">
+      <section className="pt-10 pb-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -120,34 +143,51 @@ const Membership = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="officeName">اسم المكتب *</Label>
-                      <Input id="officeName" required placeholder="أدخل اسم المكتب" />
+                      <Input
+                        id="officeName"
+                        required
+                        placeholder="أدخل اسم المكتب"
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="license">رقم الترخيص *</Label>
-                      <Input id="license" required placeholder="أدخل رقم الترخيص" />
+                      <Input
+                        id="license"
+                        required
+                        placeholder="أدخل رقم الترخيص"
+                      />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="province">المحافظة *</Label>
-                      <Input id="province" required placeholder="أدخل المحافظة" />
+                      <Input
+                        id="province"
+                        required
+                        placeholder="أدخل المحافظة"
+                      />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="responsiblePerson">الشخص المسؤول *</Label>
-                      <Input id="responsiblePerson" required placeholder="أدخل اسم المسؤول" />
+                      <Input
+                        id="responsiblePerson"
+                        required
+                        placeholder="أدخل اسم المسؤول"
+                      />
                     </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="phone">رقم الهاتف *</Label>
-                      <Input 
-                        id="phone" 
-                        type="tel" 
-                        required 
+                      <Input
+                        className="text-right"
+                        id="phone"
+                        type="tel"
+                        required
                         placeholder="أدخل رقم الهاتف"
                         dir="ltr"
                       />
@@ -155,10 +195,11 @@ const Membership = () => {
 
                     <div className="space-y-2">
                       <Label htmlFor="email">البريد الإلكتروني *</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        required 
+                      <Input
+                        className="text-right"
+                        id="email"
+                        type="email"
+                        required
                         placeholder="أدخل البريد الإلكتروني"
                         dir="ltr"
                       />
@@ -166,10 +207,13 @@ const Membership = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="swissHomeLink">رابط صفحة سويس هوم (إن وجد)</Label>
-                    <Input 
-                      id="swissHomeLink" 
-                      type="url" 
+                    <Label htmlFor="swissHomeLink">
+                      رابط صفحة سويس هوم (إن وجد)
+                    </Label>
+                    <Input
+                      className="text-right"
+                      id="swissHomeLink"
+                      type="url"
                       placeholder="https://"
                       dir="ltr"
                     />
@@ -177,16 +221,16 @@ const Membership = () => {
 
                   <div className="space-y-2">
                     <Label htmlFor="notes">ملاحظات إضافية</Label>
-                    <Textarea 
-                      id="notes" 
+                    <Textarea
+                      id="notes"
                       placeholder="أي معلومات إضافية تود إضافتها"
                       rows={4}
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    size="lg"
                     className="w-full"
                     disabled={isSubmitting}
                   >
@@ -200,7 +244,7 @@ const Membership = () => {
       </section>
 
       {/* Requirements Section */}
-      <section className="py-20">
+      {/* <section>
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card>
@@ -236,7 +280,7 @@ const Membership = () => {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

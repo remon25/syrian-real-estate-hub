@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,18 +16,42 @@ const navigation = [
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header
+      className="sticky top-0 z-50 w-full transition-all duration-300"
+      style={{
+        backgroundColor: scrolled ? "rgba(255, 255, 255, 0.7)" : "transparent",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        borderBottom: scrolled
+          ? "1px solid rgba(0, 0, 0, 0.1)"
+          : "1px solid transparent",
+        boxShadow: scrolled ? "0 2px 8px rgba(0, 0, 0, 0.05)" : "none",
+      }}
+    >
+      {" "}
       <nav className="container mx-auto flex items-center justify-between p-4 lg:px-8">
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5 flex items-center gap-3">
-            <img src={logo} alt="الجمعية السورية للوكلاء العقاريين" className="h-12 w-auto" />
-            <span className="font-bold text-lg hidden md:block text-foreground">الجمعية السورية للوكلاء العقاريين</span>
+          <Link to="/" className="flex">
+            <img
+              src={logo}
+              alt="الجمعية السورية للوكلاء العقاريين"
+              className="h-[70px] lg:h-[100px] w-auto"
+            />
           </Link>
         </div>
-        
+
         <div className="flex lg:hidden">
           <Button
             variant="ghost"
@@ -41,7 +65,7 @@ export const Header = () => {
             )}
           </Button>
         </div>
-        
+
         <div className="hidden lg:flex lg:gap-x-8">
           {navigation.map((item) => (
             <Link
@@ -58,14 +82,13 @@ export const Header = () => {
             </Link>
           ))}
         </div>
-        
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <Button asChild>
             <Link to="/membership">انضم الآن</Link>
           </Button>
         </div>
       </nav>
-
       {/* Mobile menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-border/40">
@@ -77,7 +100,7 @@ export const Header = () => {
                 className={cn(
                   "block rounded-md px-3 py-2 text-base font-medium transition-colors",
                   location.pathname === item.href
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-gray-300 text-primary"
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 )}
                 onClick={() => setMobileMenuOpen(false)}

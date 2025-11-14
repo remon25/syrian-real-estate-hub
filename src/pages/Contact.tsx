@@ -66,7 +66,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-20 bg-muted/30">
+      <section className="pt-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {contactInfo.map((info, index) => (
@@ -76,10 +76,7 @@ const Contact = () => {
                     <info.icon className="h-6 w-6 text-primary" />
                   </div>
                   <h3 className="font-bold mb-2">{info.title}</h3>
-                  <p 
-                    className="text-muted-foreground"
-                    dir={info.direction}
-                  >
+                  <p className="text-gray-800" dir={info.direction}>
                     {info.content}
                   </p>
                 </CardContent>
@@ -90,7 +87,7 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-20">
+      <section className="pt-20 pb-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -101,104 +98,46 @@ const Contact = () => {
             </div>
 
             <Card>
-              <CardContent className="p-8">
+              <CardContent className="p-4">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">الاسم الكامل *</Label>
-                    <Input 
-                      id="name" 
-                      required 
-                      placeholder="أدخل اسمك الكامل"
-                    />
+                    <Input id="name" required placeholder="أدخل اسمك الكامل" />
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div className="grid md:grid-cols-1 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="phone">رقم الهاتف *</Label>
-                      <Input 
-                        id="phone" 
-                        type="tel" 
-                        required 
+                      <Input
+                      className="text-right"
+                        id="phone"
+                        type="tel"
+                        required
                         placeholder="أدخل رقم هاتفك"
                         dir="ltr"
                       />
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="email">البريد الإلكتروني *</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        required 
-                        placeholder="أدخل بريدك الإلكتروني"
-                        dir="ltr"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">الموضوع *</Label>
-                    <Input 
-                      id="subject" 
-                      required 
-                      placeholder="موضوع الرسالة"
-                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message">الرسالة *</Label>
-                    <Textarea 
-                      id="message" 
-                      required 
+                    <Textarea
+                      id="message"
+                      required
                       placeholder="اكتب رسالتك هنا..."
                       rows={6}
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    size="lg"
                     className="w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "جاري الإرسال..." : "إرسال الرسالة"}
                   </Button>
                 </form>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Additional Info */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <Card>
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-6 text-center">
-                  لديك سؤال محدد؟
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="text-center">
-                    <h4 className="font-bold mb-2">للاستفسار عن العضوية</h4>
-                    <p className="text-sm text-muted-foreground">
-                      راجع صفحة العضوية أو تواصل معنا مباشرة
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <h4 className="font-bold mb-2">للتسجيل في الفعاليات</h4>
-                    <p className="text-sm text-muted-foreground">
-                      زر صفحة الفعاليات للاطلاع على البرنامج
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <h4 className="font-bold mb-2">للشراكات والتعاون</h4>
-                    <p className="text-sm text-muted-foreground">
-                      نرحب بالشراكات المهنية والمؤسسية
-                    </p>
-                  </div>
-                </div>
               </CardContent>
             </Card>
           </div>

@@ -38,9 +38,6 @@ const features = [
 const goals = [
   "بناء قطاع عقاري أكثر مهنية وموثوقية",
   "تمكين المكاتب بأدوات وتقنيات حديثة",
-  "توحيد المعايير والممارسات المهنية",
-  "تعزيز الثقة بين الوكلاء والعملاء",
-  "رفع مستوى الخدمات العقارية في سوريا",
 ];
 
 const Partnership = () => {
@@ -59,19 +56,19 @@ const Partnership = () => {
       </section>
 
       {/* Main Content */}
-      <section className="py-20">
+      <section className="pt-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <Card className="mb-12">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <Globe className="h-12 w-12 text-primary" />
-                  <h2 className="text-3xl font-bold">شراكتنا مع سويس هوم</h2>
+              <CardContent className="p-4 sm:p-8 text-center md:text-right">
+                <div className="flex flex-col items-center md:flex-row md:items-baseline gap-4 mb-6">
+                  <img src="/favi.webp" className="h-12 w-12 text-primary" />
+                  <h2 className="text-[22px] sm:text-3xl font-bold">شراكتنا مع سويس هوم</h2>
                 </div>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                <p className="text-lg text-gray-800 leading-relaxed mb-6">
                   تتمتع الجمعية بشراكة استراتيجية مع شركة سويس هوم العقارية بصفتها الذراع التقني الرسمي للجمعية.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-gray-800 leading-relaxed">
                   تهدف هذه الشراكة إلى تزويد أعضاء الجمعية بأحدث الأدوات والتقنيات التي تساعدهم على تطوير أعمالهم 
                   وتقديم خدمات عقارية احترافية تلبي أعلى معايير الجودة.
                 </p>
@@ -82,7 +79,7 @@ const Partnership = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="pt-10 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
@@ -120,7 +117,7 @@ const Partnership = () => {
                   {goals.map((goal, index) => (
                     <div key={index} className="flex items-start gap-4">
                       <CheckCircle className="h-6 w-6 text-primary flex-shrink-0 mt-1" />
-                      <p className="text-lg text-muted-foreground">{goal}</p>
+                      <p className="text-lg text-gray-800">{goal}</p>
                     </div>
                   ))}
                 </div>
@@ -131,7 +128,7 @@ const Partnership = () => {
       </section>
 
       {/* Benefits for Members */}
-      <section className="py-20 bg-muted/30">
+      <section className="bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center">فوائد الشراكة للأعضاء</h2>
@@ -180,15 +177,15 @@ const Partnership = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <Card className="bg-primary text-primary-foreground border-0">
-            <CardContent className="p-12 text-center">
-              <h2 className="text-3xl font-bold mb-4">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-2xl font-bold mb-4">
                 اكتشف المزيد عن سويس هوم
               </h2>
               <p className="text-xl text-primary-foreground/90 mb-8">
                 زر منصة سويس هوم واطلع على الخدمات والحلول التقنية المتاحة
               </p>
               <Button variant="secondary" size="lg" asChild>
-                <a href="https://swisshome.sy" target="_blank" rel="noopener noreferrer">
+                <a href="https://swesshome.com" target="_blank" rel="noopener noreferrer">
                   زيارة منصة سويس هوم
                 </a>
               </Button>
