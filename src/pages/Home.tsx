@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -45,14 +46,112 @@ const features = [
   },
 ];
 
+// Custom hook for scroll animations
+const useScrollReveal = (options = {}) => {
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.1,
+        ...options,
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return [ref, isVisible];
+};
 
 const Home = () => {
+  const [heroRef, heroVisible] = useScrollReveal();
+  const [featuresRef, featuresVisible] = useScrollReveal();
+  const [valuesRef, valuesVisible] = useScrollReveal();
+  const [ctaRef, ctaVisible] = useScrollReveal();
+
   return (
     <div className="min-h-screen">
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes scaleIn {
+          from {
+            transform: scale(1.1);
+          }
+          to {
+            transform: scale(1);
+          }
+        }
+
+        @keyframes continuousScale {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+        }
+
+        @keyframes bounceIn {
+          0% {
+            transform: scale(0);
+            opacity: 0;
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .animate-scale-in {
+          animation: scaleIn 1.2s ease-out;
+        }
+
+        .animate-continuous-scale {
+          animation: continuousScale 20s ease-in-out infinite;
+        }
+
+        .animate-bounce-in {
+          animation: bounceIn 0.6s ease-out;
+        }
+      `}</style>
+
       {/* Hero Section */}
       <section className="relative min-h-[500px] sm:h-[600px] flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 animate-continuous-scale"
           style={{
             backgroundImage: `linear-gradient(rgba(30, 58, 95, 0.85), rgba(30, 58, 95, 0.85)), url(${heroBg})`,
             backgroundSize: "cover",
@@ -60,37 +159,105 @@ const Home = () => {
           }}
         />
 
-        <div className="container mx-auto px-4 py-12 sm:py-16 relative z-10 text-center text-white">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+        <div
+          ref={heroRef}
+          className="container mx-auto px-4 py-12 sm:py-16 relative z-10 text-center text-white"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? "translateY(0)" : "translateY(30px)",
+            transition: "all 1s ease-out",
+          }}
+        >
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight"
+            style={{
+              animation: heroVisible
+                ? "fadeInUp 0.8s ease-out 0.2s both"
+                : "none",
+            }}
+          >
             الجمعية السورية العامة للوكلاء العقاريين
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-white/90 max-w-3xl mx-auto">
+          <p
+            className="text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 text-white/90 max-w-3xl mx-auto"
+            style={{
+              animation: heroVisible
+                ? "fadeInUp 0.8s ease-out 0.4s both"
+                : "none",
+            }}
+          >
             من أجل مهنة عقارية منظمة، موثوقة، ومعتمدة
           </p>
-          <p className="text-sm sm:text-base md:text-lg mb-8 sm:mb-10 text-white/85 max-w-4xl mx-auto leading-relaxed">
+          <p
+            className="text-sm sm:text-base md:text-lg mb-8 sm:mb-10 text-white/85 max-w-4xl mx-auto leading-relaxed"
+            style={{
+              animation: heroVisible
+                ? "fadeInUp 0.8s ease-out 0.6s both"
+                : "none",
+            }}
+          >
             نحن أول كيان مهني مستقل يجمع المكاتب والوكلاء العقاريين في سوريا،
             بهدف تطوير المهنة، تنظيم الممارسات، رفع الكفاءة، وحماية مصالح
             العاملين والعملاء. نعمل على توحيد الجهود، اعتماد المعايير المهنية،
             توفير التدريب، وتقديم خدمات قانونية وتقنية تساعد على تحسين جودة
-            العمل العقاري في سوريا.{" "}
+            العمل العقاري في سوريا.
           </p>
-          <Button
-            asChild
-            size="lg"
-            variant="secondary"
-            className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto"
+          <div
+            style={{
+              animation: heroVisible
+                ? "fadeInUp 0.8s ease-out 0.8s both"
+                : "none",
+            }}
           >
-            <Link to="/membership">انتسب الآن إلى الجمعية</Link>
-          </Button>
+            <Button
+              asChild
+              size="lg"
+              variant="secondary"
+              className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto hover:scale-105 transition-transform"
+            >
+              <Link to="/membership">انتسب الآن إلى الجمعية</Link>
+            </Button>
+          </div>
         </div>
       </section>
-
 
       {/* Features Section */}
       <section className="pt-16 sm:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">ما نقدمه</h2>
+          <div
+            ref={featuresRef}
+            className="text-center mb-12 sm:mb-16"
+            style={{
+              opacity: featuresVisible ? 1 : 0,
+              transform: featuresVisible ? "translateY(0)" : "translateY(30px)",
+              transition: "all 0.7s ease-out",
+            }}
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold  inline-block relative mb-8 sm:mb-10">
+              <span className="title-underline">ما نقدمه</span>
+              <svg
+                className={featuresVisible ? "animate-underline" : ""}
+                style={{
+                  position: "absolute",
+                  bottom: "-12px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "120%",
+                  height: "8px",
+                }}
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+              >
+                <path
+                  className="animated-underline"
+                  d="M0,4 Q50,0 100,4 T200,4"
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </h2>
             <p className="text-base sm:text-lg max-w-2xl mx-auto">
               نعمل على توحيد الجهود، اعتماد المعايير المهنية، توفير التدريب،
               وتقديم خدمات قانونية وتقنية
@@ -99,25 +266,35 @@ const Home = () => {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {features.map((feature, index) => (
-              <Card
+              <div
                 key={index}
-                className="border-2 hover:border-primary transition-all hover:shadow-lg"
+                style={{
+                  opacity: featuresVisible ? 1 : 0,
+                  transform: featuresVisible
+                    ? "translateY(0)"
+                    : "translateY(30px)",
+                  transition: `all 0.7s ease-out ${index * 100}ms`,
+                }}
               >
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <feature.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle className="text-lg sm:text-xl">{feature.title}</CardTitle>
-                  <CardDescription className="text-sm sm:text-base">
-                    {feature.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild variant="outline" className="w-full">
-                    <Link to={feature.link}>اعرف المزيد</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                <Card className="border-2 hover:border-primary transition-all hover:shadow-lg hover:-translate-y-1 h-full">
+                  <CardHeader>
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 animate-bounce-in">
+                      <feature.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle className="text-lg sm:text-xl">
+                      {feature.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm sm:text-base">
+                      {feature.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link to={feature.link}>اعرف المزيد</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
@@ -126,49 +303,95 @@ const Home = () => {
       {/* Values Section */}
       <section className="pt-16 pb-16 sm:py-20 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              لماذا الانضمام إلينا؟
+          <div
+            ref={valuesRef}
+            className="text-center mb-12 sm:mb-16"
+            style={{
+              opacity: valuesVisible ? 1 : 0,
+              transform: valuesVisible ? "translateY(0)" : "translateY(30px)",
+              transition: "all 0.7s ease-out",
+            }}
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 inline-block relative">
+              <span className="title-underline">لماذا الانضمام إلينا؟</span>
+              <svg
+                className={valuesVisible ? "animate-underline" : ""}
+                style={{
+                  position: "absolute",
+                  bottom: "-12px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "120%",
+                  height: "8px",
+                }}
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+              >
+                <path
+                  className="animated-underline"
+                  d="M0,4 Q50,0 100,4 T200,4"
+                  fill="none"
+                  stroke="hsl(var(--secondary))"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
             </h2>
           </div>
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-8 w-8 text-secondary" />
+            {[
+              {
+                icon: Shield,
+                title: "اعتماد مهني",
+                description: 'احصل على شارة "مكتب عقاري معتمد" وزد من مصداقيتك',
+              },
+              {
+                icon: TrendingUp,
+                title: "تطوير مستمر",
+                description: "ورش عمل وتدريبات مهنية منتظمة لتطوير مهاراتك",
+              },
+              {
+                icon: FileText,
+                title: "دعم قانوني",
+                description: "استشارات قانونية متخصصة ومواد تدريبية حصرية",
+              },
+            ].map((value, index) => (
+              <div
+                key={index}
+                className="text-center"
+                style={{
+                  opacity: valuesVisible ? 1 : 0,
+                  transform: valuesVisible ? "scale(1)" : "scale(0.9)",
+                  transition: `all 0.7s ease-out ${index * 150}ms`,
+                }}
+              >
+                <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4 hover:bg-secondary/30 transition-all hover:scale-110 duration-300">
+                  <value.icon className="h-8 w-8 text-secondary" />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold mb-2">
+                  {value.title}
+                </h3>
+                <p className="text-sm sm:text-base text-muted-foreground">
+                  {value.description}
+                </p>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2">اعتماد مهني</h3>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                احصل على شارة "مكتب عقاري معتمد" وزد من مصداقيتك
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="h-8 w-8 text-secondary" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2">تطوير مستمر</h3>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                ورش عمل وتدريبات مهنية منتظمة لتطوير مهاراتك
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-                <FileText className="h-8 w-8 text-secondary" />
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold mb-2">دعم قانوني</h3>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                استشارات قانونية متخصصة ومواد تدريبية حصرية
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="pt-16 pb-16 sm:py-20 bg-primary text-primary-foreground border-b border-gray-500 border-[1px] border-x-none">
-        <div className="container mx-auto px-4 text-center">
+        <div
+          ref={ctaRef}
+          className="container mx-auto px-4 text-center"
+          style={{
+            opacity: ctaVisible ? 1 : 0,
+            transform: ctaVisible ? "translateY(0)" : "translateY(30px)",
+            transition: "all 1s ease-out",
+          }}
+        >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
             انضم إلى شبكة الوكلاء العقاريين المعتمدين
           </h2>
@@ -179,7 +402,7 @@ const Home = () => {
             asChild
             size="lg"
             variant="secondary"
-            className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto"
+            className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto hover:scale-105 transition-transform"
           >
             <Link to="/membership">ابدأ عضويتك الآن</Link>
           </Button>
