@@ -16,7 +16,7 @@ const useScrollReveal = (options = {}) => {
           observer.unobserve(entry.target);
         }
       },
-      {
+      { 
         threshold: 0.1,
         ...options,
       }
