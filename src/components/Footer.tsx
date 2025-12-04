@@ -10,10 +10,15 @@ export const Footer = () => {
           {/* Logo Section - Full width on mobile and tablet */}
           <div className="space-y-4 text-center md:text-right md:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3 justify-center md:justify-start">
-              <img src={logo} alt="Logo" className="h-24 w-auto brightness-0 invert" />
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-24 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-sm text-gray-200">
-              الجمعية السورية العامة للوكلاء العقاريين - من أجل مهنة عقارية منظمة، موثوقة، ومعتمدة.
+              الجمعية السورية العامة للوكلاء العقاريين - من أجل مهنة عقارية
+              منظمة، موثوقة، ومعتمدة.
             </p>
           </div>
 
@@ -22,24 +27,44 @@ export const Footer = () => {
             <h3 className="font-bold text-lg mb-4">روابط سريعة</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-sm text-gray-200 hover:text-primary-foreground transition-colors">
+                <Link
+                  to="/"
+                  className="text-sm text-gray-200 hover:text-primary-foreground transition-colors"
+                >
                   الرئيسية
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-sm text-gray-200 hover:text-primary-foreground transition-colors">
+                <Link
+                  to="/about"
+                  className="text-sm text-gray-200 hover:text-primary-foreground transition-colors"
+                >
                   من نحن
                 </Link>
               </li>
               <li>
-                <Link to="/membership" className="text-sm text-gray-200 hover:text-primary-foreground transition-colors">
+                <Link
+                  to="/membership"
+                  className="text-sm text-gray-200 hover:text-primary-foreground transition-colors"
+                >
                   العضوية
                 </Link>
               </li>
               <li>
-                <Link to="/events" className="text-sm text-gray-200 hover:text-primary-foreground transition-colors">
+                <Link
+                  to="/events"
+                  className="text-sm text-gray-200 hover:text-primary-foreground transition-colors"
+                >
                   الفعاليات
                 </Link>
+              </li>
+              <li>
+                <a
+                  href="/profile/index.html"
+                  className="text-sm text-gray-200 hover:text-primary-foreground transition-colors"
+                >
+                  بروفايل الجمعية
+                </a>
               </li>
             </ul>
           </div>
@@ -77,7 +102,8 @@ export const Footer = () => {
 
         <div className="mt-12 pt-8 border-t border-primary-foreground/20 text-center">
           <p className="text-sm text-primary-foreground/60">
-            © {new Date().getFullYear()} الجمعية السورية العامة للوكلاء العقاريين. جميع الحقوق محفوظة.
+            © {new Date().getFullYear()} الجمعية السورية العامة للوكلاء
+            العقاريين. جميع الحقوق محفوظة.
           </p>
         </div>
       </div>
