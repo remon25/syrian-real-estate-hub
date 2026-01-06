@@ -17,6 +17,16 @@ import {
   Shield,
 } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import officeOne from "@/assets/office-1.jpg";
+import officeTwo from "@/assets/office-2.jpg";
+import officeThree from "@/assets/offcie-3.webp";
+import officeFour from "@/assets/office-4.png";
+import officeFive from "@/assets/office-5.webp";
+import officeSix from "@/assets/office-6.jpg";
+import officeSeven from "@/assets/office-7.jpg";
+import officesEight from "@/assets/office-8.png";
+import officeNine from "@/assets/office-9.jpg";
+import officeTen from "@/assets/office-10.webp";
 
 const features = [
   {
@@ -378,6 +388,143 @@ const Home = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Members Section */}
+      <section className="pt-16 pb-16 sm:py-20 bg-gradient-to-b from-background to-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 inline-block relative">
+              <span className="title-underline">أعضاء الجمعية</span>
+              <svg
+                style={{
+                  position: "absolute",
+                  bottom: "-12px",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  width: "120%",
+                  height: "8px",
+                }}
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0,4 Q50,0 100,4 T200,4"
+                  fill="none"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mt-6">
+              نفخر بشراكتنا مع المكاتب العقارية الرائدة في سوريا
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
+            {[
+              {
+                id: "50335",
+                name: "عقارkey",
+                abbr: "العقارات الذهبية",
+                placeholder: `${officeOne}`,
+              },
+              {
+                id: "50376",
+                name: "مكتب سهيل العقاري",
+                abbr: "سهيل",
+                placeholder: `${officeTwo}`,
+              },
+              {
+                id: "50353",
+                name: "مكتب حلا الشام",
+                abbr: "حلا الشام العقاري",
+                placeholder: `${officeThree}`,
+              },
+              {
+                id: "50119",
+                name: "مكتب الإدلبي العقاري",
+                abbr: "مكتب الإدلبي العقاري",
+                placeholder: `${officeFour}`,
+              },
+              {
+                id: "50069",
+                name: "مكتب الرحمن العقاري",
+                abbr: "الرحمن العقاري",
+                placeholder: `${officeFive}`,
+              },
+              {
+                id: "50347",
+                name: "الوكيل للعقارات",
+                abbr: "الرؤية",
+                placeholder: `${officeSix}`,
+              },
+              {
+                id: "50361",
+                name: " مكتب تنبكجي للأعمال العقارية",
+                abbr: "تنبكجي",
+                placeholder: `${officeSeven}`,
+              },
+              {
+                id: "50251",
+                name: "مكتب الوفا العقاري ",
+                abbr: "الوفا",
+                placeholder: `${officesEight}`,
+              },
+              {
+                id: "50270",
+                name: "مكتب الوفاء للتطوير العقاري",
+                abbr: "الوفاء",
+                placeholder: `${officeNine}`,
+              },
+              {
+                id: "50357",
+                name: "مكتب الفارس للتطوير العقاري",
+                abbr: "الفارس",
+                placeholder: `${officeTen}`,
+              },
+            ].map((member, index) => (
+              <Link
+                target="_blank"
+                to={`https://swesshome.com/ar/agents/${member.id}`}
+                key={index}
+                className="group relative block"
+                style={{
+                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
+                }}
+              >
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 flex flex-col items-center justify-center h-full min-h-[160px] group-hover:-translate-y-2">
+                  {/* Logo Placeholder */}
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[5px] overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <img
+                      src={member.placeholder}
+                      alt={member.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Member Name */}
+                  <h3 className="text-sm sm:text-base font-semibold text-center leading-tight group-hover:text-primary transition-colors">
+                    {member.name}
+                  </h3>
+
+                  {/* Verified Badge */}
+                  <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground">
+                    <Shield className="h-3 w-3 text-secondary" />
+                    <span>معتمد</span>
+                  </div>
+                </div>
+
+                {/* Decorative Corner */}
+                <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-tr-lg" />
+                <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-bl-lg" />
+              </Link>
+            ))}
+          </div>
+
+         
         </div>
       </section>
 
