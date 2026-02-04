@@ -17,16 +17,6 @@ import {
   Shield,
 } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
-import officeOne from "@/assets/office-1.jpg";
-import officeTwo from "@/assets/office-2.jpg";
-import officeThree from "@/assets/offcie-3.webp";
-import officeFour from "@/assets/office-4.png";
-import officeFive from "@/assets/office-5.webp";
-import officeSix from "@/assets/office-6.jpg";
-import officeSeven from "@/assets/office-7.jpg";
-import officesEight from "@/assets/office-8.png";
-import officeNine from "@/assets/office-9.jpg";
-import officeTen from "@/assets/office-10.webp";
 
 const features = [
   {
@@ -93,7 +83,31 @@ const Home = () => {
   const [heroRef, heroVisible] = useScrollReveal();
   const [featuresRef, featuresVisible] = useScrollReveal();
   const [valuesRef, valuesVisible] = useScrollReveal();
+  const [membersRef, membersVisible] = useScrollReveal();
   const [ctaRef, ctaVisible] = useScrollReveal();
+
+  const [featuredOffices, setFeaturedOffices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchFeaturedOffices = async () => {
+      try {
+        const response = await fetch('https://backend.swesshome.com/v1/api/featured-offices');
+        if (!response.ok) {
+          throw new Error('Failed to fetch featured offices');
+        }
+        const result = await response.json();
+        setFeaturedOffices(result.data || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeaturedOffices();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -394,7 +408,15 @@ const Home = () => {
       {/* Members Section */}
       <section className="pt-16 pb-16 sm:py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16">
+          <div 
+            ref={membersRef}
+            className="text-center mb-12 sm:mb-16"
+            style={{
+              opacity: membersVisible ? 1 : 0,
+              transform: membersVisible ? "translateY(0)" : "translateY(30px)",
+              transition: "all 0.7s ease-out",
+            }}
+          >
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 inline-block relative">
               <span className="title-underline">أعضاء الجمعية</span>
               <svg
@@ -423,108 +445,78 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
-            {[
-              {
-                id: "50335",
-                name: "عقارkey",
-                abbr: "العقارات الذهبية",
-                placeholder: `${officeOne}`,
-              },
-              {
-                id: "50376",
-                name: "مكتب سهيل العقاري",
-                abbr: "سهيل",
-                placeholder: `${officeTwo}`,
-              },
-              {
-                id: "50353",
-                name: "مكتب حلا الشام",
-                abbr: "حلا الشام العقاري",
-                placeholder: `${officeThree}`,
-              },
-              {
-                id: "50119",
-                name: "مكتب الإدلبي العقاري",
-                abbr: "مكتب الإدلبي العقاري",
-                placeholder: `${officeFour}`,
-              },
-              {
-                id: "50069",
-                name: "مكتب الرحمن العقاري",
-                abbr: "الرحمن العقاري",
-                placeholder: `${officeFive}`,
-              },
-              {
-                id: "50347",
-                name: "الوكيل للعقارات",
-                abbr: "الرؤية",
-                placeholder: `${officeSix}`,
-              },
-              {
-                id: "50361",
-                name: " مكتب تنبكجي للأعمال العقارية",
-                abbr: "تنبكجي",
-                placeholder: `${officeSeven}`,
-              },
-              {
-                id: "50251",
-                name: "مكتب الوفا العقاري ",
-                abbr: "الوفا",
-                placeholder: `${officesEight}`,
-              },
-              {
-                id: "50270",
-                name: "مكتب الوفاء للتطوير العقاري",
-                abbr: "الوفاء",
-                placeholder: `${officeNine}`,
-              },
-              {
-                id: "50357",
-                name: "مكتب الفارس للتطوير العقاري",
-                abbr: "الفارس",
-                placeholder: `${officeTen}`,
-              },
-            ].map((member, index) => (
-              <Link
-                target="_blank"
-                to={`https://swesshome.com/ar/agents/${member.id}`}
-                key={index}
-                className="group relative block"
-                style={{
-                  animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-                }}
-              >
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 flex flex-col items-center justify-center h-full min-h-[160px] group-hover:-translate-y-2">
-                  {/* Logo Placeholder */}
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[5px] overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <img
-                      src={member.placeholder}
-                      alt={member.name}
-                      className="w-full h-full object-cover"
-                    />
+          {loading && (
+            <div className="text-center py-12">
+              <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
+              <p className="mt-4 text-muted-foreground">جاري تحميل أعضاء الجمعية...</p>
+            </div>
+          )}
+
+          {error && (
+            <div className="text-center py-12">
+              <p className="text-red-500">حدث خطأ أثناء تحميل البيانات: {error}</p>
+            </div>
+          )}
+
+          {!loading && !error && featuredOffices.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
+              {featuredOffices.map((office, index) => (
+                <Link
+                  target="_blank"
+                  to={`https://swesshome.com/ar/agents/${office.id}`}
+                  key={office.id}
+                  className="group relative block"
+                  style={{
+                    opacity: membersVisible ? 1 : 0,
+                    transform: membersVisible ? "translateY(0)" : "translateY(30px)",
+                    transition: `all 0.6s ease-out ${index * 0.1}s`,
+                  }}
+                >
+                  <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-primary/20 flex flex-col items-center justify-center h-full min-h-[160px] group-hover:-translate-y-2">
+                    {/* Logo */}
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[5px] overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <img
+                        src={`https://backend.swesshome.com/storage/${office.logo}`}
+                        alt={office.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = 'https://via.placeholder.com/80?text=Logo';
+                        }}
+                      />
+                    </div>
+
+                    {/* Member Name */}
+                    <h3 className="text-sm sm:text-base font-semibold text-center leading-tight group-hover:text-primary transition-colors">
+                      {office.name}
+                    </h3>
+
+                    {/* Property Stats */}
+                    <div className="mt-2 text-xs text-muted-foreground text-center">
+                      {office.number_estate_sale > 0 && (
+                        <span>{office.number_estate_sale} للبيع</span>
+                      )}
+                      {office.number_estate_sale > 0 && office.number_estate_rent > 0 && (
+                        <span> • </span>
+                      )}
+                      {office.number_estate_rent > 0 && (
+                        <span>{office.number_estate_rent} للإيجار</span>
+                      )}
+                    </div>
+
+                    {/* Verified Badge */}
+                    <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground">
+                      <Shield className="h-3 w-3 text-secondary" />
+                      <span>معتمد</span>
+                    </div>
                   </div>
 
-                  {/* Member Name */}
-                  <h3 className="text-sm sm:text-base font-semibold text-center leading-tight group-hover:text-primary transition-colors">
-                    {member.name}
-                  </h3>
-
-                  {/* Verified Badge */}
-                  <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground">
-                    <Shield className="h-3 w-3 text-secondary" />
-                    <span>معتمد</span>
-                  </div>
-                </div>
-
-                {/* Decorative Corner */}
-                <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-tr-lg" />
-                <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-bl-lg" />
-              </Link>
-            ))}
-          </div>
-
-         
+                  {/* Decorative Corner */}
+                  <div className="absolute top-2 right-2 w-3 h-3 border-t-2 border-r-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-tr-lg" />
+                  <div className="absolute bottom-2 left-2 w-3 h-3 border-b-2 border-l-2 border-primary/0 group-hover:border-primary/50 transition-all duration-300 rounded-bl-lg" />
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
