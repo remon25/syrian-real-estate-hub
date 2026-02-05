@@ -491,7 +491,7 @@ const Home = () => {
                     </h3>
 
                     {/* Property Stats */}
-                    <div className="mt-2 text-xs text-muted-foreground text-center">
+                    {/* <div className="mt-2 text-xs text-muted-foreground text-center">
                       {office.number_estate_sale > 0 && (
                         <span>{office.number_estate_sale} للبيع</span>
                       )}
@@ -501,7 +501,7 @@ const Home = () => {
                       {office.number_estate_rent > 0 && (
                         <span>{office.number_estate_rent} للإيجار</span>
                       )}
-                    </div>
+                    </div> */}
 
                     {/* Verified Badge */}
                     <div className="mt-3 flex items-center gap-1 text-xs text-muted-foreground">
